@@ -132,9 +132,10 @@ const dummyData = {
 };
 export default {
   name: "AdminRestaurantsForm",
-  data() {
-    return {
-      restaurant: {
+  props: {
+    initialRestaurant: {
+      type: Object,
+      default: () => ({
         name: "",
         categoryId: "",
         tel: "",
@@ -142,6 +143,13 @@ export default {
         description: "",
         image: "",
         openingHours: "",
+      }),
+    },
+  },
+  data() {
+    return {
+      restaurant: {
+        ...this.initialRestaurant,
       },
       categories: [],
     };
