@@ -37,16 +37,44 @@
             {{ category.id }}
           </th>
           <td class="position-relative">
-            <div class="category-name">
+            <div v-show="!category.isEditing" class="category-name">
               {{ category.name }}
             </div>
+            <input
+              v-show="category.isEditing"
+              v-model="category.name"
+              type="text"
+              class="form-control"
+            />
+            <span
+              @click="handleCancel(category.id)"
+              v-show="category.isEditing"
+              class="cancel"
+            >
+              ✕
+            </span>
           </td>
           <td class="d-flex justify-content-between">
-            <button type="button" class="btn btn-link mr-2">Edit</button>
             <button
-              @click.stop.prevent="deleteCategory(category.id)"
+              v-show="!category.isEditing"
               type="button"
               class="btn btn-link mr-2"
+              @click.stop.prevent="toggleIsEditing(category.id)"
+            >
+              Edit
+            </button>
+            <button
+              v-show="category.isEditing"
+              type="button"
+              class="btn btn-link mr-2"
+              @click.stop.prevent="updateCategory(category.id)"
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              class="btn btn-link mr-2"
+              @click.stop.prevent="deleteCategory(category.id)"
             >
               Delete
             </button>
@@ -56,6 +84,36 @@
     </table>
   </div>
 </template>
+
+<style scoped>
+.category-name {
+  padding: 0.375rem 0.75rem;
+  border: 1px solid transparent;
+  outline: 0;
+  cursor: auto;
+}
+
+.btn-link {
+  width: 62px;
+}
+
+.cancel {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  border: 1px solid #aaaaaa;
+  border-radius: 50%;
+  user-select: none;
+  cursor: pointer;
+  font-size: 12px;
+}
+</style>
 
 <script>
 import AdminNav from "../components/AdminNav";
@@ -106,7 +164,11 @@ export default {
   },
   methods: {
     fetchCategories() {
-      this.categories = dummyData.categories;
+      this.categories = dummyData.categories.map((category) => ({
+        ...category,
+        isEditing: false,
+        nameCached: "",
+      }));
     },
     createCategory() {
       this.categories.push({
@@ -119,6 +181,36 @@ export default {
       this.categories = this.categories.filter(
         (category) => category.id !== categoryId
       );
+    },
+    toggleIsEditing(categoryId) {
+      this.categories = this.categories.map((category) => {
+        if (category.id === categoryId) {
+          return {
+            ...category,
+            isEditing: !category.isEditing,
+            nameCached: category.name,
+          };
+        }
+        return category;
+      });
+    },
+    updateCategory(categoryId) {
+      this.toggleIsEditing(categoryId);
+    },
+    handleCancel(categoryId) {
+      this.categories = this.categories.map((category) => {
+        if (category.id === categoryId) {
+          return {
+            ...category,
+
+            // 把原本的餐廳類別名稱還回去
+            name: category.nameCached,
+          };
+        }
+        return category;
+      });
+
+      this.toggleIsEditing(categoryId);
     },
   },
 };
