@@ -66,46 +66,38 @@ export default {
     };
   },
   methods: {
-    handleSubmit() {
-      // const data = JSON.stringify({
-      //   email: this.email,
-      //   password: this.password,
-      // });
-      // console.log("handleSubmit", data);
-      if (!this.email || !this.password) {
-        Toast.fire({
-          title: "請填入email 或是 password",
-          icon: "warnig",
-        });
-        return;
-      }
-
-      this.isProcessing = true;
-
-      authorizationAPI
-        .signIn({
-          email: this.email,
-          password: this.password,
-        })
-        .then((res) => {
-          const { data } = res;
-
-          if (data.status !== "success") {
-            throw new Error(data.message);
-          }
-
-          localStorage.setItem("token", data.token);
-          this.$router.push("/restaurants");
-        })
-        .catch((error) => {
-          this.isProcessing = false;
-          this.password = "";
+    async handleSubmit() {
+      try {
+        if (!this.email || !this.password) {
           Toast.fire({
-            title: "輸入的帳號或是密碼有誤",
+            title: "請填入email 或是 password",
             icon: "warnig",
           });
-          console.log(eorro);
+          return;
+        }
+        this.isProcessing = true;
+
+        const response = await authorizationAPI.signIn({
+          email: this.email,
+          password: this.password,
         });
+        const { data } = response;
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        localStorage.setItem("token", data.token);
+        this.$router.push("/restaurants");
+      } catch (error) {
+        this.isProcessing = false;
+        this.password = "";
+        Toast.fire({
+          title: "輸入的帳號或是密碼有誤",
+          icon: "warnig",
+        });
+        console.log("error", error);
+      }
     },
   },
 };
