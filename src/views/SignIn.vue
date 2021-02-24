@@ -34,7 +34,11 @@
         />
       </div>
 
-      <button class="btn btn-lg btn-primary btn-block mb-3" type="submit">
+      <button
+        class="btn btn-lg btn-primary btn-block mb-3"
+        type="submit"
+        :disabled="isProcessing"
+      >
         Submit
       </button>
 
@@ -49,20 +53,59 @@
   </div>
 </template>
 <script>
+import authorizationAPI from "../apis/authorization";
+import { Toast } from "../utils/helpers";
+
 export default {
+  name: "SignIn",
   data() {
     return {
       email: "",
       password: "",
+      isProcessing: false,
     };
   },
   methods: {
     handleSubmit() {
-      const data = JSON.stringify({
-        email: this.email,
-        password: this.password,
-      });
-      console.log("handleSubmit", data);
+      // const data = JSON.stringify({
+      //   email: this.email,
+      //   password: this.password,
+      // });
+      // console.log("handleSubmit", data);
+      if (!this.email || !this.password) {
+        Toast.fire({
+          title: "請填入email 或是 password",
+          icon: "warnig",
+        });
+        return;
+      }
+
+      this.isProcessing = true;
+
+      authorizationAPI
+        .signIn({
+          email: this.email,
+          password: this.password,
+        })
+        .then((res) => {
+          const { data } = res;
+
+          if (data.status !== "success") {
+            throw new Error(data.message);
+          }
+
+          localStorage.setItem("token", data.token);
+          this.$router.push("/restaurants");
+        })
+        .catch((error) => {
+          this.isProcessing = false;
+          this.password = "";
+          Toast.fire({
+            title: "輸入的帳號或是密碼有誤",
+            icon: "warnig",
+          });
+          console.log(eorro);
+        });
     },
   },
 };

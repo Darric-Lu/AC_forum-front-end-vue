@@ -10,7 +10,7 @@ const routes = [
   {
     path: '/',
     name: 'roots',
-    component: Restaurants
+    component: SignIn
   },
   {
     path: '/signin',
