@@ -13,7 +13,7 @@
 <script>
 import NavTabs from "../components/NavTabs";
 import Users from "../components/Users";
-import getUserTopAPI from "../apis/users";
+import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
 
 export default {
@@ -35,7 +35,12 @@ export default {
   methods: {
     async fetchUsers() {
       try {
-        const { data } = await getUserTopAPI.getUserTop();
+        const { data } = await usersAPI.getUserTop();
+
+        if (data.length === 0) {
+          throw new Error(data.message);
+        }
+
         this.users = data.users;
       } catch (error) {
         console.log(error);
