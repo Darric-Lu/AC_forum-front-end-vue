@@ -13,7 +13,7 @@
 <script>
 import NavTabs from "../components/NavTabs";
 import Users from "../components/Users";
-import getUserTopAPI from "../apis/userTop";
+import getUserTopAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
 
 export default {
