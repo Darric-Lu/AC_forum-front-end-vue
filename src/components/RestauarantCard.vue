@@ -41,7 +41,7 @@
           加到最愛
         </button>
         <button
-          @click.prevent.stop="unlike"
+          @click.prevent.stop="unlike(restaurant.id)"
           v-if="restaurant.isLiked"
           type="button"
           class="btn btn-danger like mr-2"
@@ -49,7 +49,7 @@
           Unlike
         </button>
         <button
-          @click.prevent.stop="like"
+          @click.prevent.stop="like(restaurant.id)"
           v-else
           type="button"
           class="btn btn-primary like mr-2"
@@ -117,17 +117,43 @@ export default {
         });
       }
     },
-    like() {
-      this.restaurant = {
-        ...this.restaurant,
-        isLiked: true,
-      };
+    async like(restaurantId) {
+      try {
+        const { data } = await userAPI.addLiked({ restaurantId });
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        this.restaurant = {
+          ...this.restaurant,
+          isLiked: true,
+        };
+      } catch (error) {
+        console.log(error);
+        Toast.fire({
+          icon: "error",
+          title: "無法加入Like，請稍後再試",
+        });
+      }
     },
-    unlike() {
-      this.restaurant = {
-        ...this.restaurant,
-        isLiked: false,
-      };
+    async unlike(restaurantId) {
+      try {
+        const { data } = await userAPI.unLiked({ restaurantId });
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        this.restaurant = {
+          ...this.restaurant,
+          isLiked: false,
+        };
+      } catch (error) {
+        console.log(error);
+        Toast.fire({
+          icon: "error",
+          title: "無法加入Like，請稍後再試",
+        });
+      }
     },
   },
 };

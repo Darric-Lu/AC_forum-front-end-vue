@@ -1,4 +1,3 @@
-import { data } from 'jquery'
 import { apiHelper } from '../utils/helpers'
 const getToken = () => localStorage.getItem('token')
 
@@ -10,6 +9,16 @@ export default {
   },
   deleteFavorite({ restaurantId }) {
     return apiHelper.delete(`/favorite/${restaurantId}`, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
+  },
+  addLiked({ restaurantId }) {
+    return apiHelper.post(`/like/${restaurantId}`, null, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
+  },
+  unLiked({ restaurantId }) {
+    return apiHelper.delete(`/like/${restaurantId}`, {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
   },
