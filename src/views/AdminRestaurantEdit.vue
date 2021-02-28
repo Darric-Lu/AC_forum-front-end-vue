@@ -61,10 +61,6 @@ export default {
           title: "無法更新餐廳資料，請稍後再試",
         });
       }
-      // 透過 API 將表單資料送到伺服器
-      for (let [name, value] of formData.entries()) {
-        console.log(name + ": " + value);
-      }
     },
     async fetchRestaurant(restaurantId) {
       try {

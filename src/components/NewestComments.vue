@@ -33,13 +33,5 @@ export default {
     },
   },
   mixins: [fromNowFilter],
-  // created() {
-  //   this.dataFilter();
-  // },
-  // methods: {
-  //   dataFilter() {
-  //     return this.comments.filter((e) => e.Restaurant);
-  //   },
-  // },
 };
 </script>
