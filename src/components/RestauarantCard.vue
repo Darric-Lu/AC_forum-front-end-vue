@@ -25,7 +25,7 @@
       </div>
       <div class="card-footer">
         <button
-          @click.prevent.stop="deletFavorite"
+          @click.prevent.stop="deletFavorite(restaurant.id)"
           v-if="restaurant.isFavorited"
           type="button"
           class="btn btn-danger btn-border favorite mr-2"
@@ -33,7 +33,7 @@
           移除最愛
         </button>
         <button
-          @click.prevent.stop="addFavorite"
+          @click.prevent.stop="addFavorite(restaurant.id)"
           v-else
           type="button"
           class="btn btn-primary btn-border favorite mr-2"
@@ -62,6 +62,8 @@
 </template>
 
 <script>
+import userAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
 export default {
   props: {
     initialRestaurant: {
@@ -75,17 +77,45 @@ export default {
     };
   },
   methods: {
-    addFavorite() {
-      this.restaurant = {
-        ...this.restaurant,
-        isFavorited: true,
-      };
+    async addFavorite(restaurantId) {
+      try {
+        const { data } = await userAPI.addFavorite({ restaurantId });
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.restaurant = {
+          ...this.restaurant,
+          isFavorited: true,
+        };
+      } catch (error) {
+        console.log(error);
+        Toast.fire({
+          icon: "error",
+          title: "無法將餐廳加入最愛，請稍後再試",
+        });
+      }
     },
-    deletFavorite() {
-      this.restaurant = {
-        ...this.restaurant,
-        isFavorited: false,
-      };
+    async deletFavorite(restaurantId) {
+      try {
+        const { data } = await userAPI.deleteFavorite({ restaurantId });
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.restaurant = {
+          ...this.restaurant,
+          isFavorited: false,
+        };
+      } catch (error) {
+        console.log(error);
+        Toast.fire({
+          icon: "error",
+          title: "無法將餐廳刪除最愛，請稍後再試",
+        });
+      }
     },
     like() {
       this.restaurant = {
