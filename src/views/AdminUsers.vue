@@ -1,7 +1,7 @@
 <template>
   <div class="container py-5">
+    <AdminNav />
     <!-- AdminNav Component -->
-
     <table class="table">
       <thead class="thead-dark">
         <tr>
@@ -43,6 +43,8 @@
   </div>
 </template>
 <script>
+import AdminNav from "../components/AdminNav";
+
 const dummyData = {
   users: [
     {
@@ -1001,6 +1003,9 @@ const dummyUser = {
 };
 export default {
   name: "AdminUsers",
+  components: {
+    AdminNav,
+  },
   data() {
     return {
       users: [],
