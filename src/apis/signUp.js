@@ -1,10 +1,11 @@
 import { apiHelper } from '../utils/helpers'
-const getToken = () => localStorage.getItem('token')
 
 export default {
-  signUp() {
-    return apiHelper.post(`/signup`, formData, {
-      headers: { Authorization: `Bearer ${getToken()}` }
+  signUp({
+    name, email, password, passwordCheck
+  }) {
+    return apiHelper.post('/signup', {
+      name, email, password, passwordCheck
     })
   }
 }

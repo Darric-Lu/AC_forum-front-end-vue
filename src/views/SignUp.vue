@@ -62,8 +62,12 @@
         />
       </div>
 
-      <button class="btn btn-lg btn-primary btn-block mb-3" type="submit">
-        Submit
+      <button
+        class="btn btn-lg btn-primary btn-block mb-3"
+        type="submit"
+        :disabled="isProcessing"
+      >
+        {{ isProcessing ? "處理中..." : "Submit" }}
       </button>
 
       <div class="text-center mb-3">
@@ -77,6 +81,8 @@
   </div>
 </template>
 <script>
+import { Toast } from "../utils/helpers";
+import signUpAPI from "../apis/signUp";
 export default {
   data() {
     return {
@@ -84,17 +90,58 @@ export default {
       email: "",
       password: "",
       passwordCheck: "",
+      isProcessing: false,
     };
   },
   methods: {
-    handleSubmit() {
-      const data = JSON.stringify({
-        name: this.name,
-        email: this.email,
-        password: this.password,
-        passwordCheck: this.passwordCheck,
-      });
-      console.log("signup", data);
+    async handleSubmit(e) {
+      if (!this.name) {
+        Toast.fire({
+          icon: "error",
+          title: "請填寫Name",
+        });
+        return;
+      } else if (!this.email) {
+        Toast.fire({
+          icon: "error",
+          title: "請填寫Email",
+        });
+        return;
+      } else if (
+        !this.password ||
+        !this.passwordCheck ||
+        this.password !== this.passwordCheck
+      ) {
+        Toast.fire({
+          icon: "error",
+          title: "請填寫再確認密碼",
+        });
+        return;
+      }
+      const form = e.target;
+      console.log(form);
+      const formData = new FormData(form);
+      console.log(formData);
+      try {
+        this.isProcessing = true;
+        const { data } = await signUpAPI.signUp({
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          passwordCheck: this.passwordCheck,
+        });
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        this.$router.push({ name: "sign-in" });
+      } catch (error) {
+        this.isProcessing = false;
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "目前無法註冊，請稍後再試",
+        });
+      }
     },
   },
 };
