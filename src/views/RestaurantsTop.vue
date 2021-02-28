@@ -34,7 +34,7 @@ export default {
     async fetchRestaurantTop() {
       try {
         const { data } = await restaurantAPI.getRestaurantsTop();
-        this.restaurantsTops = data.restaurants;
+        this.restaurantsTops = data.restaurants.filter((e) => e);
       } catch (error) {
         console.log(error);
         Toast.fire({
