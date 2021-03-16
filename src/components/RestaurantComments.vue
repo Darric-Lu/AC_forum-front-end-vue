@@ -26,14 +26,6 @@
 </template>
 
 <script>
-const dummyUser = {
-  currentUser: {
-    id: 1,
-    name: "roo00t",
-    email: "root@example.com",
-    isAdmin: true,
-  },
-};
 import { fromNowFilter } from "./../utils/mixins";
 export default {
   name: "RestaurantComments",
@@ -43,11 +35,6 @@ export default {
       type: Array,
       required: true,
     },
-  },
-  data() {
-    return {
-      currentUser: dummyUser.currentUser,
-    };
   },
   methods: {
     handleDeleteButtonClick(commentId) {

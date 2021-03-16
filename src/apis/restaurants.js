@@ -12,5 +12,11 @@ export default {
     return apiHelper.get(`/restaurants/top`, {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
-  }
+  },
+  getRestaurant({ restaurantId }) {
+    // console.log('router', restaurantId)
+    return apiHelper.get(`/restaurants/${restaurantId}`, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
+  },
 }
