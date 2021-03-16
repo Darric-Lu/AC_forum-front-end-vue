@@ -35,6 +35,10 @@ export default {
       type: Array,
       required: true,
     },
+    currentUser: {
+      type: Object,
+      require: true,
+    },
   },
   methods: {
     handleDeleteButtonClick(commentId) {

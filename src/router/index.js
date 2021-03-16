@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import NotFound from '../views/NotFound.vue'
 import SignIn from '../views/SignIn.vue'
 import Restaurants from '../views/Restaurants.vue'
-import store from '../store/index'
+import store from '../store/index.js'
 
 Vue.use(VueRouter)
 
@@ -111,6 +111,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  console.log('dispatch --- fetchCurrentUser')
   store.dispatch('fetchCurrentUser')
   next()
 })

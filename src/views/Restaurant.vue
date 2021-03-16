@@ -6,6 +6,7 @@
     <!-- 餐廳評論 RestaurantComments -->
     <RestaurantComments
       :restaurantComments="restaurantComments"
+      :currentUser="currentUser"
       @after-delete-comment="afterDeleteComment"
     />
     <!-- 新增評論 CreateComment -->
@@ -78,9 +79,9 @@ export default {
         const { data } = await restaurantAPI.getRestaurant({ restaurantId });
         console.log("data", data);
 
-        if (data.status === "error") {
-          throw new Error(data.message);
-        }
+        // if (data.status === "error") {
+        //   throw new Error(data.message);
+        // }
 
         const { restaurant, isFavorited, isLiked } = data;
         const {

@@ -32,10 +32,7 @@ export default new Vuex.Store({
     async fetchCurrentUser({ commit }) {
       try {
         const { data } = await userAPI.getCurrentUser()
-
-        if (data.status !== 'success') {
-          throw new Error(data.message)
-        }
+        console.log('data fetchCurrentUser', data)
         const { id, name, email, image, isAdmin } = data
         commit('setCurrentUser', {
           id, name, email, image, isAdmin
