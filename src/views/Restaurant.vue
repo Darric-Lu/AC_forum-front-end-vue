@@ -35,6 +35,7 @@ import CreateComment from "../components/CreateComment";
 import restaurantAPI from "../apis/restaurants";
 import { Toast } from "../utils/helpers";
 import { mapState } from "vuex";
+import commentsAPI from "../apis/comments";
 
 export default {
   name: "Restaurant",
@@ -115,10 +116,23 @@ export default {
         });
       }
     },
-    afterDeleteComment(commentId) {
-      this.restaurantComments = this.restaurantComments.filter(
-        (comment) => comment.id !== commentId
-      );
+    async afterDeleteComment(commentId) {
+      console.log("commentId", commentId);
+      try {
+        const response = await commentsAPI.deleteComments(commentId);
+        console.log("response", response);
+        // if (data.status !== "success") {
+        //   throw new Error(data.message);
+        // }
+        this.restaurantComments = this.restaurantComments.filter(
+          (comment) => comment.id !== commentId
+        );
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "目前無法山刪除評論，請稍後在試",
+        });
+      }
     },
     afterCreateComment(payload) {
       const { commentId, restaurantId, text } = payload;
