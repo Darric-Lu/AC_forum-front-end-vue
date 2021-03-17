@@ -1,5 +1,5 @@
 import { apiHelper } from '../utils/helpers'
-const getToken = () => localStorage.getToken('token')
+const getToken = () => localStorage.getItem('token')
 
 export default {
   creatComments({ restaurantId, text }) {
@@ -11,6 +11,5 @@ export default {
     return apiHelper.delete(`/comments/${id}`, {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
-
   }
 }

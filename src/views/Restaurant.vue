@@ -75,10 +75,10 @@ export default {
   },
   methods: {
     async fetchRestaurant(restaurantId) {
-      console.log("id", restaurantId);
+      // console.log("id", restaurantId);
       try {
         const { data } = await restaurantAPI.getRestaurant({ restaurantId });
-        console.log("data", data);
+        // console.log("data", data);
 
         // if (data.status === "error") {
         //   throw new Error(data.message);
@@ -117,8 +117,8 @@ export default {
       }
     },
     async afterDeleteComment(commentId) {
-      console.log("commentId", commentId);
       try {
+        console.log("commentId", commentId);
         const response = await commentsAPI.deleteComments(commentId);
         console.log("response", response);
         // if (data.status !== "success") {
