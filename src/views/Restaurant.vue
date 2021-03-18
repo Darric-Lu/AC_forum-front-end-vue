@@ -18,17 +18,6 @@
 </template>
 
 <script>
-// const dummyUser = {
-//   currentUser: {
-//     id: 1,
-//     name: "roo00t",
-//     email: "root@example.com",
-//     image: "https://i.imgur.com/3keAGHT.jpeg",
-//     isAdmin: true,
-//   },
-//   isAuthenticated: true,
-// };
-
 import RestaurantDetail from "../components/RestaurantDetail";
 import RestaurantComments from "../components/RestaurantComments";
 import CreateComment from "../components/CreateComment";
@@ -78,11 +67,6 @@ export default {
       // console.log("id", restaurantId);
       try {
         const { data } = await restaurantAPI.getRestaurant({ restaurantId });
-        // console.log("data", data);
-
-        // if (data.status === "error") {
-        //   throw new Error(data.message);
-        // }
 
         const { restaurant, isFavorited, isLiked } = data;
         const {
@@ -118,12 +102,10 @@ export default {
     },
     async afterDeleteComment(commentId) {
       try {
-        console.log("commentId", commentId);
+        // console.log("commentId", commentId);
         const response = await commentsAPI.deleteComments(commentId);
-        console.log("response", response);
-        // if (data.status !== "success") {
-        //   throw new Error(data.message);
-        // }
+        console.log("delete-response", response);
+
         this.restaurantComments = this.restaurantComments.filter(
           (comment) => comment.id !== commentId
         );
@@ -134,18 +116,30 @@ export default {
         });
       }
     },
-    afterCreateComment(payload) {
-      const { commentId, restaurantId, text } = payload;
-      this.restaurantComments.push({
-        id: commentId,
-        RestaurantId: restaurantId,
-        User: {
-          id: this.currentUser.id,
-          name: this.currentUser.name,
-        },
-        text,
-        createdAt: new Date(),
-      });
+    async afterCreateComment(payload) {
+      const { restaurantId, text } = payload;
+      try {
+        const response = await commentsAPI.creatComments({
+          restaurantId,
+          text,
+        });
+        console.log("create-response", response);
+
+        this.restaurantComments.push({
+          RestaurantId: restaurantId,
+          User: {
+            id: this.currentUser.id,
+            name: this.currentUser.name,
+          },
+          text,
+          createdAt: new Date(),
+        });
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "目前無法新增評論，請稍後再試",
+        });
+      }
     },
   },
 };
