@@ -1,7 +1,13 @@
 <template>
   <div class="container py-5">
     <!-- 餐廳資訊頁 RestaurantDetail -->
-    <RestaurantDetail :initial-restaurant="restaurant" />
+    <RestaurantDetail
+      :initial-restaurant="restaurant"
+      @after-add-favorite="afterAddFavorite"
+      @after-remove-favorite="afterRemoveFavorite"
+      @after-add-like="afterAddLike"
+      @after-remove-like="afterRemoveLike"
+    />
     <hr />
     <!-- 餐廳評論 RestaurantComments -->
     <RestaurantComments
@@ -25,6 +31,7 @@ import restaurantAPI from "../apis/restaurants";
 import { Toast } from "../utils/helpers";
 import { mapState } from "vuex";
 import commentsAPI from "../apis/comments";
+import userAPI from "../apis/users";
 
 export default {
   name: "Restaurant",
@@ -138,6 +145,62 @@ export default {
         Toast.fire({
           icon: "error",
           title: "目前無法新增評論，請稍後再試",
+        });
+      }
+    },
+    async afterAddFavorite(restaurantId) {
+      try {
+        const { data } = await userAPI.addFavorite({ restaurantId });
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法將餐廳加入最愛，請稍後再試",
+        });
+      }
+    },
+    async afterRemoveFavorite(restaurantId) {
+      try {
+        const { data } = await userAPI.deleteFavorite({ restaurantId });
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法將餐廳刪除最愛，請稍後再試",
+        });
+      }
+    },
+    async afterAddLike(restaurantId) {
+      try {
+        const { data } = await userAPI.addLiked({ restaurantId });
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法將餐廳加入Like，請稍後再試",
+        });
+      }
+    },
+    async afterRemoveLike(restaurantId) {
+      try {
+        const { data } = await userAPI.unLiked({ restaurantId });
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法將餐廳加入Like，請稍後再試",
         });
       }
     },

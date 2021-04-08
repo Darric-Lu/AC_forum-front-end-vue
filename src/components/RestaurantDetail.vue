@@ -38,7 +38,7 @@
       >
 
       <button
-        @click.prevent.stop="deletFavorite"
+        @click.prevent.stop="deletFavorite(restaurant.id)"
         v-if="restaurant.isFavorited"
         type="button"
         class="btn btn-danger btn-border mr-2"
@@ -46,7 +46,7 @@
         移除最愛
       </button>
       <button
-        @click.prevent.stop="addFavorite"
+        @click.prevent.stop="addFavorite(restaurant.id)"
         v-else
         type="button"
         class="btn btn-primary btn-border mr-2"
@@ -54,7 +54,7 @@
         加到最愛
       </button>
       <button
-        @click.prevent.stop="unlike"
+        @click.prevent.stop="unlike(restaurant.id)"
         v-if="restaurant.isLiked"
         type="button"
         class="btn btn-danger like mr-2"
@@ -62,7 +62,7 @@
         Unlike
       </button>
       <button
-        @click.prevent.stop="like"
+        @click.prevent.stop="like(restaurant.id)"
         v-else
         type="button"
         class="btn btn-primary like mr-2"
@@ -95,25 +95,29 @@ export default {
     },
   },
   methods: {
-    addFavorite() {
+    addFavorite(restaurantId) {
+      this.$emit("after-add-favorite", restaurantId);
       this.restaurant = {
         ...this.restaurant,
         isFavorited: true,
       };
     },
-    deletFavorite() {
+    deletFavorite(restaurantId) {
+      this.$emit("after-remove-favorite", restaurantId);
       this.restaurant = {
         ...this.restaurant,
         isFavorited: false,
       };
     },
-    like() {
+    like(restaurantId) {
+      this.$emit("after-add-like", restaurantId);
       this.restaurant = {
         ...this.restaurant,
         isLiked: true,
       };
     },
-    unlike() {
+    unlike(restaurantId) {
+      this.$emit("after-remove-like", restaurantId);
       this.restaurant = {
         ...this.restaurant,
         isLiked: false,
