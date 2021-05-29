@@ -25,8 +25,6 @@ export default {
   data() {
     return {
       users: [],
-      presetImage:
-        "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?cs=srgb&dl=pexels-simon-robben-614810.jpg&fm=jpg",
     };
   },
   created() {

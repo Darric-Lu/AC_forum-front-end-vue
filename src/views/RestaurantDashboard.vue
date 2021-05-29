@@ -104,6 +104,7 @@ const dummyRestaurantDashboard = {
   },
 };
 export default {
+  name: "RestaurantDashboard",
   data() {
     return {
       restaurant: [],
