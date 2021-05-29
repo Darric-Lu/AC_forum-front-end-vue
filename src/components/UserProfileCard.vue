@@ -1,12 +1,7 @@
 <template>
   <div class="row row no-gutters">
     <div class="col-md-4">
-      <img
-        :src="profile.image ? profile.image : presetImage"
-        alt=""
-        width="300px"
-        height="300px"
-      />
+      <img :src="profile.image" alt="" width="300px" height="300px" />
     </div>
     <div class="col-md-8">
       <div class="card-body">
@@ -80,8 +75,8 @@ export default {
   },
   data() {
     return {
-      presetImage:
-        "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?cs=srgb&dl=pexels-simon-robben-614810.jpg&fm=jpg",
+      // presetImage:
+      //   "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?cs=srgb&dl=pexels-simon-robben-614810.jpg&fm=jpg",
       count: {
         Comments: "",
         FavoritedRestaurants: "",
