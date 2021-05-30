@@ -22,7 +22,6 @@
             <strong>{{ count.Followers }}</strong> followers (追隨者)
           </li>
         </ul>
-        <!-- <p> -->
         <div>
           <div v-if="currentUserId === profileUserId">
             <router-link
@@ -48,7 +47,6 @@
             </button>
           </div>
         </div>
-        <!-- </p> -->
       </div>
     </div>
   </div>
@@ -75,8 +73,6 @@ export default {
   },
   data() {
     return {
-      // presetImage:
-      //   "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?cs=srgb&dl=pexels-simon-robben-614810.jpg&fm=jpg",
       count: {
         Comments: "",
         FavoritedRestaurants: "",
@@ -88,7 +84,9 @@ export default {
       isFollowed: "false",
     };
   },
-  created() {},
+  created() {
+    this.fetchDataCount();
+  },
   methods: {
     async addFollowered(userId) {
       try {
@@ -99,7 +97,6 @@ export default {
         }
         this.isFollowed = true;
       } catch (error) {
-        console.log(error);
         Toast.fire({
           icon: "error",
           title: "目前無法追蹤，請稍後再試",
@@ -116,7 +113,6 @@ export default {
 
         this.isFollowed = false;
       } catch (error) {
-        console.log(error);
         Toast.fire({
           icon: "error",
           title: "目前無法取消追蹤，請稍後再試",

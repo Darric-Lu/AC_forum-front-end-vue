@@ -52,6 +52,7 @@
 import userAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
 export default {
+  name: "UserCommentsCard",
   props: {
     initinalRestaurant: {
       type: Object,
@@ -84,7 +85,6 @@ export default {
           FavoriteCount: nunber,
         };
       } catch (error) {
-        console.log(error);
         Toast.fire({
           icon: "error",
           title: "無法將餐廳加入最愛，請稍後再試",
@@ -105,7 +105,6 @@ export default {
           FavoriteCount: nunber,
         };
       } catch (error) {
-        console.log(error);
         Toast.fire({
           icon: "error",
           title: "無法將餐廳刪除最愛，請稍後再試",

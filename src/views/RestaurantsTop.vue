@@ -3,7 +3,9 @@
     <NavTabs />
     <h1 class="mt-5 text-center">人氣餐廳</h1>
     <hr />
+
     <Spinner v-if="isLoading" />
+
     <template v-else>
       <TopCards
         v-for="restaurant in restaurantsTops"
@@ -43,7 +45,6 @@ export default {
         this.isLoading = false;
       } catch (error) {
         this.isLoading = false;
-        console.log(error);
         Toast.fire({
           icon: "error",
           title: "無法載入人氣餐廳，請稍後再試",

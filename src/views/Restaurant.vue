@@ -1,6 +1,5 @@
 <template>
   <div class="container py-5">
-    <!-- 餐廳資訊頁 RestaurantDetail -->
     <RestaurantDetail
       :initial-restaurant="restaurant"
       @after-add-favorite="afterAddFavorite"
@@ -8,14 +7,15 @@
       @after-add-like="afterAddLike"
       @after-remove-like="afterRemoveLike"
     />
+
     <hr />
-    <!-- 餐廳評論 RestaurantComments -->
+
     <RestaurantComments
       :restaurantComments="restaurantComments"
       :currentUser="currentUser"
       @after-delete-comment="afterDeleteComment"
     />
-    <!-- 新增評論 CreateComment -->
+
     <CreateComment
       :restaurant-id="restaurant.id"
       @after-create-comment="afterCreateComment"
@@ -71,10 +71,8 @@ export default {
   },
   methods: {
     async fetchRestaurant(restaurantId) {
-      // console.log("id", restaurantId);
       try {
         const { data } = await restaurantAPI.getRestaurant({ restaurantId });
-
         const { restaurant, isFavorited, isLiked } = data;
         const {
           id,
@@ -109,10 +107,8 @@ export default {
     },
     async afterDeleteComment(commentId) {
       try {
-        // console.log("commentId", commentId);
         const response = await commentsAPI.deleteComments(commentId);
-        console.log("delete-response", response);
-
+        response;
         this.restaurantComments = this.restaurantComments.filter(
           (comment) => comment.id !== commentId
         );
@@ -130,8 +126,7 @@ export default {
           restaurantId,
           text,
         });
-        console.log("create-response", response);
-
+        response;
         this.restaurantComments.push({
           RestaurantId: restaurantId,
           User: {

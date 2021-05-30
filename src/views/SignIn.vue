@@ -99,7 +99,6 @@ export default {
           title: "輸入的帳號或是密碼有誤",
           icon: "warnig",
         });
-        console.log("error", error);
       }
     },
   },

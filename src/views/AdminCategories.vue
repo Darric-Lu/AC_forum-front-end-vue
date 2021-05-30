@@ -25,6 +25,7 @@
     </form>
     <table class="table">
       <Spinner v-if="isLoading" />
+
       <template v-else>
         <thead class="thead-dark">
           <tr>
@@ -130,7 +131,6 @@ export default {
     AdminNav,
     Spinner,
   },
-
   data() {
     return {
       newCategroyName: "",
@@ -138,7 +138,6 @@ export default {
       isLoading: true,
     };
   },
-
   created() {
     this.fetchCategories();
   },
@@ -167,6 +166,7 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
+
         this.newCategroyName = "";
         this.fetchCategories();
         Toast.fire({
@@ -174,7 +174,6 @@ export default {
           title: "新增成功",
         });
       } catch (error) {
-        console.log(error);
         Toast.fire({
           icon: "error",
           title: "目前無法新增餐廳類別",
@@ -233,7 +232,6 @@ export default {
           title: "更新成功",
         });
       } catch (error) {
-        console.log("error", error);
         Toast.fire({
           icon: "error",
           title: "目前無法更新餐廳類別，請稍後再試",
@@ -248,7 +246,6 @@ export default {
           }
           return category;
         });
-
         this.toggleIsEditing(categoryId);
       }
     },
@@ -264,14 +261,8 @@ export default {
         }
         return category;
       });
-
       this.toggleIsEditing(categoryId);
     },
   },
-  // watch: {
-  //   categories(newValue) {
-  //     this.categories = [...this.categories, ...newValue];
-  //   },
-  // },
 };
 </script>

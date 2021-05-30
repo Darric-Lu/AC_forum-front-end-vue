@@ -13,8 +13,6 @@
   </form>
 </template>
 <script>
-// import { v4 as uuidv4 } from "uuid";
-
 export default {
   name: "CreateComment",
   props: {
@@ -30,9 +28,7 @@ export default {
   },
   methods: {
     handleSubmit() {
-      console.log("submit", this.text);
       this.$emit("after-create-comment", {
-        // commentId: uuidv4(),
         restaurantId: this.restaurantId,
         text: this.text,
       });

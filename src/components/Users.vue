@@ -35,6 +35,7 @@
 <script>
 import { Toast } from "../utils/helpers";
 import usersAPI from "../apis/users";
+
 export default {
   props: {
     initialUser: {
@@ -45,12 +46,7 @@ export default {
   data() {
     return {
       user: this.initialUser,
-      presetImage:
-        "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?cs=srgb&dl=pexels-simon-robben-614810.jpg&fm=jpg",
     };
-  },
-  created() {
-    // console.log(this.user);
   },
   methods: {
     async addFollowered(userId) {
@@ -67,7 +63,6 @@ export default {
           FollowerCount: nunber,
         };
       } catch (error) {
-        console.log(error);
         Toast.fire({
           icon: "error",
           title: "目前無法追蹤，請稍後再試",
@@ -88,7 +83,6 @@ export default {
           FollowerCount: nunber,
         };
       } catch (error) {
-        console.log(error);
         Toast.fire({
           icon: "error",
           title: "目前無法取消追蹤，請稍後再試",

@@ -1,7 +1,9 @@
 <template>
   <div class="container py-5">
     <NavTabs />
+
     <Spinner v-if="isLoading" />
+
     <template v-else>
       <!-- 餐廳類別標籤 RestaurantsNavPills -->
       <RestaurantsNavPills :categories="categories" />

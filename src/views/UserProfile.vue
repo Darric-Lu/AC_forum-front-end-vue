@@ -69,7 +69,6 @@ export default {
   },
   methods: {
     async fetchData(userId) {
-      console.log("user id", userId);
       try {
         const { data } = await userAPI.get({ userId });
 
@@ -86,8 +85,6 @@ export default {
         this.Followers = Followers;
         this.Followings = Followings;
         this.isFollowed = isFollowed;
-
-        console.log("data", data);
       } catch (error) {
         Toast.fire({
           title: "無法載入請稍後再試",

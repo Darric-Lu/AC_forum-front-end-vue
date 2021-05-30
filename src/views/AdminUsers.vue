@@ -1,9 +1,9 @@
 <template>
   <div class="container py-5">
     <AdminNav />
-    <!-- AdminNav Component -->
     <table class="table">
       <Spinner v-if="isLoading" />
+
       <template v-else>
         <thead class="thead-dark">
           <tr>
@@ -47,6 +47,7 @@
     </table>
   </div>
 </template>
+
 <script>
 import { mapState } from "vuex";
 import { Toast } from "../utils/helpers";
@@ -77,7 +78,6 @@ export default {
     async fetchUser() {
       try {
         const { data } = await adminAPI.user.get();
-        // console.log("response data".data);
         this.users = data.users.map((user) => ({
           ...user,
         }));
@@ -95,14 +95,12 @@ export default {
       const authority = JSON.stringify({
         isAdmin: String(!this.users.find((user) => user.id === id).isAdmin),
       });
-      console.log("authority", authority);
       try {
         const { data } = await adminAPI.user.update({
           userId: id,
           authority: authority,
         });
-        console.log(data);
-
+        data;
         this.users = this.users.map((user) => {
           if (user.id === id) {
             return {

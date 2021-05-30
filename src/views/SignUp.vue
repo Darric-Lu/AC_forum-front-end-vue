@@ -83,6 +83,7 @@
 <script>
 import { Toast } from "../utils/helpers";
 import signUpAPI from "../apis/signUp";
+
 export default {
   data() {
     return {
@@ -119,9 +120,9 @@ export default {
         return;
       }
       const form = e.target;
-      console.log(form);
+
       const formData = new FormData(form);
-      console.log(formData);
+      formData;
       try {
         this.isProcessing = true;
         const { data } = await signUpAPI.signUp({
@@ -136,7 +137,7 @@ export default {
         this.$router.push({ name: "sign-in" });
       } catch (error) {
         this.isProcessing = false;
-        console.log("error", error);
+
         Toast.fire({
           icon: "error",
           title: "目前無法註冊，請稍後再試",

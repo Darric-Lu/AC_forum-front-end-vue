@@ -3,7 +3,9 @@
     <NavTabs />
     <h1 class="mt-5">美食達人</h1>
     <hr />
+
     <Spinner v-if="isLoading" />
+
     <template v-else>
       <div class="row text-center">
         <Users v-for="user in users" :key="user.id" :initial-user="user" />
@@ -49,7 +51,7 @@ export default {
         this.isLoading = false;
       } catch (error) {
         this.isLoading = false;
-        console.log(error);
+
         Toast.fire({
           icon: "error",
           title: "無法接收美食達人的名次，請稍後再試",

@@ -34,7 +34,7 @@ export default {
     AdminRestaurantForm,
   },
   beforeRouteUpdate(to, from, next) {
-    const { id } = to.query;
+    const { id } = to.params;
     this.fetchRestaurant(id);
     next();
   },
@@ -65,7 +65,6 @@ export default {
     async fetchRestaurant(restaurantId) {
       try {
         const { data } = await adminAPI.restaurant.getDetail({ restaurantId });
-        console.log("fetch data", data);
         const { id, name, tel, address, description, image } = data.restaurant;
         this.restaurant = {
           ...this.restaurant,
@@ -79,13 +78,11 @@ export default {
           openingHours: data.restaurant.opening_hours,
         };
       } catch (error) {
-        console.log(error);
         Toast.fire({
           icon: "error",
           title: "無法取得餐廳資料",
         });
       }
-      console.log("data", this.restaurant);
     },
   },
 };

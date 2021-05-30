@@ -102,9 +102,9 @@ export default {
         this.isProcessing = true;
         try {
           const id = this.user.id;
-          console.log("handleSubmit", id);
+
           const { data } = await userAPI.update({ userId: id, formData });
-          console.log("response", data);
+          data;
           this.$router.push({ name: "user", params: { id } });
         } catch (error) {
           Toast.fire({
@@ -113,9 +113,9 @@ export default {
           });
         }
       }
-      for (let [name, value] of formData.entries()) {
-        console.log(name + ": " + value);
-      }
+      // for (let [name, value] of formData.entries()) {
+      //   console.log(name + ": " + value);
+      // }
     },
   },
 };

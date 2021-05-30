@@ -17,6 +17,7 @@
 
 <script>
 export default {
+  name: "UserFollowingsCard",
   props: {
     Followings: {
       type: Array,

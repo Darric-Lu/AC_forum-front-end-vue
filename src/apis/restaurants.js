@@ -9,7 +9,9 @@ export default {
     return apiHelper.get(`/restaurants/top`)
   },
   getRestaurant({ restaurantId }) {
-    // console.log('router', restaurantId)
     return apiHelper.get(`/restaurants/${restaurantId}`)
   },
+  gitRestaurantDashboard(restaurantId) {
+    return apiHelper.get(`/restaurants/${restaurantId}/dashboard`)
+  }
 }

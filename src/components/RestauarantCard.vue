@@ -98,7 +98,7 @@ export default {
         this.isProcessing = false;
       } catch (error) {
         this.isProcessing = false;
-        console.log(error);
+
         Toast.fire({
           icon: "error",
           title: "無法將餐廳加入最愛，請稍後再試",
@@ -121,7 +121,7 @@ export default {
         this.isProcessing = false;
       } catch (error) {
         this.isProcessing = false;
-        console.log(error);
+
         Toast.fire({
           icon: "error",
           title: "無法將餐廳刪除最愛，請稍後再試",
@@ -143,7 +143,7 @@ export default {
         this.isProcessing = false;
       } catch (error) {
         this.isProcessing = false;
-        console.log(error);
+
         Toast.fire({
           icon: "error",
           title: "無法加入Like，請稍後再試",
@@ -165,7 +165,7 @@ export default {
         this.isProcessing = false;
       } catch (error) {
         this.isProcessing = false;
-        console.log(error);
+
         Toast.fire({
           icon: "error",
           title: "無法加入Like，請稍後再試",

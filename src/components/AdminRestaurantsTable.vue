@@ -1,6 +1,7 @@
 <template>
   <table class="table">
     <Spinner v-if="isLoading" />
+
     <template v-else>
       <thead class="thead-dark">
         <tr>
@@ -55,6 +56,7 @@ import { Toast } from "../utils/helpers";
 import Spinner from "../components/Spinner";
 
 export default {
+  name: "AdminRestaurantsTable",
   data() {
     return {
       restaurants: [],

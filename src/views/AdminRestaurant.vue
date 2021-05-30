@@ -1,6 +1,7 @@
 <template>
   <div class="container py-5">
     <Spinner v-if="isLoading" />
+
     <template v-else>
       <div class="row">
         <div class="col-md-12">
@@ -37,6 +38,7 @@
         </div>
       </div>
     </template>
+
     <hr />
     <button type="button" class="btn btn-link" @click="$router.back()">
       回上一頁
@@ -105,20 +107,6 @@ export default {
           title: "目前無法載入餐廳詳細頁面",
         });
       }
-      // const { restaurant } = dummyData;
-      // this.restaurant = {
-      //   ...this.restaurant,
-      //   id: restaurant.id,
-      //   name: restaurant.name,
-      //   categoryName: restaurant.Category.name
-      //     ? restaurant.Category.name
-      //     : "未分類",
-      //   image: restaurant.image,
-      //   openingHours: restaurant.opening_hours,
-      //   tel: restaurant.tel,
-      //   address: restaurant.address,
-      //   description: restaurant.description,
-      // };
     },
   },
 };
