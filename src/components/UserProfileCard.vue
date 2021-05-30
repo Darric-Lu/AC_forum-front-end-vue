@@ -83,8 +83,8 @@ export default {
         Followings: "",
         Followers: "",
       },
-      currentUserId: "false",
-      profileUserId: "false",
+      currentUserId: this.currentUser.id,
+      profileUserId: this.profile.id,
       isFollowed: "false",
     };
   },
