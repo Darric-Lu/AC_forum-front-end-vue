@@ -13,7 +13,7 @@
         />
         <!-- 餐廳卡片 RestaurantCard-->
       </div>
-
+      <div v-if="restaurants.length < 1">此分類目前沒有資料</div>
       <!-- 分頁標籤 RestaurantPagination -->
       <RestaurantsPagination
         v-if="totalPage.length > 1"
