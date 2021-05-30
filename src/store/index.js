@@ -13,7 +13,8 @@ export default new Vuex.Store({
       image: '',
       isAdmin: false
     },
-    isAuthenticated: false
+    isAuthenticated: false,
+    token: ""
   },
   //commit 發動 action
   mutations: {
@@ -25,6 +26,14 @@ export default new Vuex.Store({
       }
       // 將使用者的登入狀態改為 true
       state.isAuthenticated = true
+      // 在 stroe 存入 token
+      state.token = localStorage.getItem('token')
+    },
+    revokeAuthentication(state) {
+      state.currentUser = {}
+      state.isAuthenticated = false
+      state.token = ""
+      localStorage.removeItem('token')
     }
   },
   //dispatch 發動 action
@@ -32,13 +41,16 @@ export default new Vuex.Store({
     async fetchCurrentUser({ commit }) {
       try {
         const { data } = await userAPI.getCurrentUser()
-        console.log('data fetchCurrentUser', data)
+        // console.log('data fetchCurrentUser', data)
         const { id, name, email, image, isAdmin } = data
         commit('setCurrentUser', {
           id, name, email, image, isAdmin
         })
+        return true
       } catch (error) {
         console.log(error)
+        commit("revokeAuthentication")
+        return false
       }
     },
   },
