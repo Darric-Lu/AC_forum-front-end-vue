@@ -3,9 +3,12 @@
     <NavTabs />
     <h1 class="mt-5">美食達人</h1>
     <hr />
-    <div class="row text-center">
-      <Users v-for="user in users" :key="user.id" :initial-user="user" />
-    </div>
+    <Spinner v-if="isLoading" />
+    <template v-else>
+      <div class="row text-center">
+        <Users v-for="user in users" :key="user.id" :initial-user="user" />
+      </div>
+    </template>
   </div>
 </template>
 
@@ -14,6 +17,7 @@
 import NavTabs from "../components/NavTabs";
 import Users from "../components/Users";
 import usersAPI from "../apis/users";
+import Spinner from "../components/Spinner";
 import { Toast } from "../utils/helpers";
 
 export default {
@@ -21,10 +25,12 @@ export default {
   components: {
     NavTabs,
     Users,
+    Spinner,
   },
   data() {
     return {
       users: [],
+      isLoading: true,
     };
   },
   created() {
@@ -40,7 +46,9 @@ export default {
         }
 
         this.users = data.users;
+        this.isLoading = false;
       } catch (error) {
+        this.isLoading = false;
         console.log(error);
         Toast.fire({
           icon: "error",
