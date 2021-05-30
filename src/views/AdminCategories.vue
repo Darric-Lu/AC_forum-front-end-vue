@@ -24,63 +24,66 @@
       </div>
     </form>
     <table class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col" width="60">#</th>
-          <th scope="col">Category Name</th>
-          <th scope="col" width="210">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="category in categories" :key="category.id">
-          <th scope="row">
-            {{ category.id }}
-          </th>
-          <td class="position-relative">
-            <div v-show="!category.isEditing" class="category-name">
-              {{ category.name }}
-            </div>
-            <input
-              v-show="category.isEditing"
-              v-model="category.name"
-              type="text"
-              class="form-control"
-            />
-            <span
-              @click="handleCancel(category.id)"
-              v-show="category.isEditing"
-              class="cancel"
-            >
-              ✕
-            </span>
-          </td>
-          <td class="d-flex justify-content-between">
-            <button
-              v-show="!category.isEditing"
-              type="button"
-              class="btn btn-link mr-2"
-              @click.stop.prevent="toggleIsEditing(category.id)"
-            >
-              Edit
-            </button>
-            <button
-              v-show="category.isEditing"
-              type="button"
-              class="btn btn-link mr-2"
-              @click.stop.prevent="updateCategory(category.id, category.name)"
-            >
-              Save
-            </button>
-            <button
-              type="button"
-              class="btn btn-link mr-2"
-              @click.stop.prevent="deleteCategory(category.id)"
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
+      <Spinner v-if="isLoading" />
+      <template v-else>
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col" width="60">#</th>
+            <th scope="col">Category Name</th>
+            <th scope="col" width="210">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="category in categories" :key="category.id">
+            <th scope="row">
+              {{ category.id }}
+            </th>
+            <td class="position-relative">
+              <div v-show="!category.isEditing" class="category-name">
+                {{ category.name }}
+              </div>
+              <input
+                v-show="category.isEditing"
+                v-model="category.name"
+                type="text"
+                class="form-control"
+              />
+              <span
+                @click="handleCancel(category.id)"
+                v-show="category.isEditing"
+                class="cancel"
+              >
+                ✕
+              </span>
+            </td>
+            <td class="d-flex justify-content-between">
+              <button
+                v-show="!category.isEditing"
+                type="button"
+                class="btn btn-link mr-2"
+                @click.stop.prevent="toggleIsEditing(category.id)"
+              >
+                Edit
+              </button>
+              <button
+                v-show="category.isEditing"
+                type="button"
+                class="btn btn-link mr-2"
+                @click.stop.prevent="updateCategory(category.id, category.name)"
+              >
+                Save
+              </button>
+              <button
+                type="button"
+                class="btn btn-link mr-2"
+                @click.stop.prevent="deleteCategory(category.id)"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </template>
     </table>
   </div>
 </template>
@@ -118,18 +121,21 @@
 <script>
 import AdminNav from "../components/AdminNav";
 import adminAPI from "../apis/admin";
+import Spinner from "../components/Spinner";
 import { Toast } from "../utils/helpers";
 
 export default {
   name: "AdminCategories",
   components: {
     AdminNav,
+    Spinner,
   },
 
   data() {
     return {
       newCategroyName: "",
       categories: [],
+      isLoading: true,
     };
   },
 
@@ -145,7 +151,9 @@ export default {
           isEditing: false,
           nameCached: "",
         }));
+        this.isLoading = false;
       } catch (error) {
+        this.isLoading = false;
         Toast.fire({
           icon: "error",
           title: "無法載入餐廳分類，請稍後再試",
